@@ -18,21 +18,31 @@ public class BaseballGame {
     private int countStrikes(String inputNumber) {
         int strikeCount = 0;
         for (int i = 0; i < GAME_SIZE; i++) {
-            if (isStrike(inputNumber.charAt(i), i)) {
-                strikeCount++;
-            }
+            strikeCount += getStrikeIncrement(inputNumber.charAt(i), i);
         }
         return strikeCount;
+    }
+
+    private int getStrikeIncrement(char inputChar, int index) {
+        if (isStrike(inputChar, index)) {
+            return 1;
+        }
+        return 0;
     }
 
     private int countBalls(String inputNumber) {
         int ballCount = 0;
         for (int i = 0; i < GAME_SIZE; i++) {
-            if (isBall(inputNumber.charAt(i), i)) {
-                ballCount++;
-            }
+            ballCount += getBallIncrement(inputNumber.charAt(i), i);
         }
         return ballCount;
+    }
+
+    private int getBallIncrement(char inputChar, int index) {
+        if (isBall(inputChar, index)) {
+            return 1;
+        }
+        return 0;
     }
 
     private boolean isStrike(char inputChar, int index) {
