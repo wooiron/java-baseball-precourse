@@ -10,31 +10,36 @@ public class BaseballGame {
     }
 
     public Result play(String inputNumber) {
-        int strikeCount = 0;
-        int ballCount = 0;
-
-        for (int i = 0; i < GAME_SIZE; i++) {
-            char inputChar = inputNumber.charAt(i);
-            char targetChar = targetNumber.charAt(i);
-
-            if (inputChar == targetChar) {
-                strikeCount++;
-            } else if (targetNumber.indexOf(inputChar) != -1) {
-                ballCount++;
-            }
-        }
+        int strikeCount = countStrikes(inputNumber);
+        int ballCount = countBalls(inputNumber);
         return new Result(strikeCount, ballCount);
     }
 
-    private boolean isStrike(char inputChar, int index) {
-        return inputChar == targetNumber.charAt(index);
+    private int countStrikes(String inputNumber) {
+        int strikeCount = 0;
+        for (int i = 0; i < GAME_SIZE; i++) {
+            if (isStrike(inputNumber.charAt(i), i)) {
+                strikeCount++;
+            }
+        }
+        return strikeCount;
     }
 
-    private int countBall(char inputChar) {
-        if (!targetNumber.contains(String.valueOf(inputChar))) {
-            return 0;
+    private int countBalls(String inputNumber) {
+        int ballCount = 0;
+        for (int i = 0; i < GAME_SIZE; i++) {
+            if (isBall(inputNumber.charAt(i), i)) {
+                ballCount++;
+            }
         }
-        return 1;
+        return ballCount;
+    }
+
+    private boolean isStrike(char inputChar, int index) {
+        return targetNumber.charAt(index) == inputChar;
+    }
+
+    private boolean isBall(char inputChar, int index) {
+        return !isStrike(inputChar, index) && targetNumber.contains(String.valueOf(inputChar));
     }
 }
-
